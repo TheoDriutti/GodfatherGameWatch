@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2ff77b5e25554bc4eab65a93f38c9cc5
+guid: cdf24f03d5356c44db70b60ed12048da
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - CF LCD 521
+  - LCD
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

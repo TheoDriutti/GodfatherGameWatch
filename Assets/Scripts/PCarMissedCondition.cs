@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class pMissCondition : MonoBehaviour
+public class PCarMissedCondition : MonoBehaviour
 {
     TextMeshProUGUI failText;
     Image failImage1;
