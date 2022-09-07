@@ -4,22 +4,19 @@ using UnityEngine;
 
 public class JDisplay : MonoBehaviour
 {
-    GameObject[,] carGrid = new GameObject[4, 4];
-    GameObject[,] playerGrid = new GameObject[4, 1];
-
     [Tooltip("The game board that indicates what pieces are to be displayed")]
-    public JGameBoard board;
+    //public JGameBoard board;
 
     public GameObject[] carColumns;
     public GameObject[] players;
 
     private void Start()
     {
-        SetupCarsGrid(carGrid);
-        SetupPlayerGrid(playerGrid);
-        DisplayTwoDimensionnalGrid(carGrid);
-        DisplayTwoDimensionnalGrid(playerGrid);
-        StartCoroutine(UpdateDisplay(carGrid, playerGrid));    
+        SetupCarsGrid(JGameController.instance.board.carGridGo);
+        SetupPlayerGrid(JGameController.instance.board.playerGridGo);
+        DisplayTwoDimensionnalGrid(JGameController.instance.board.carGridGo);
+        DisplayTwoDimensionnalGrid(JGameController.instance.board.playerGridGo);
+        StartCoroutine(UpdateDisplay(JGameController.instance.board.carGridGo, JGameController.instance.board.playerGridGo));    
     }
 
     public void SetupCarsGrid(GameObject[,] gridGo)
@@ -53,21 +50,21 @@ public class JDisplay : MonoBehaviour
 
     IEnumerator UpdateDisplay(GameObject[,] carsGridGo, GameObject[,] playersGridGo)
     {
-        while (true)
+        while (JGameController.instance.gameState == JGameController.GameState.Game)
         {
-            for (int y = 0; y < board.carGrid.GetLength(1); y++)
+            for (int y = 0; y < JGameController.instance.board.carGrid.GetLength(1); y++)
             {
-                for (int x = 0; x < board.carGrid.GetLength(0); x++)
+                for (int x = 0; x < JGameController.instance.board.carGrid.GetLength(0); x++)
                 {
-                    carsGridGo[x, y].SetActive(board.GetValueAt(x, y, board.carGrid));
+                    carsGridGo[x, y].SetActive(JGameController.instance.board.GetValueAt(x, y, JGameController.instance.board.carGrid));
                 }
             }
 
-            for (int y = 0; y < board.playerGrid.GetLength(1); y++)
+            for (int y = 0; y < JGameController.instance.board.playerGrid.GetLength(1); y++)
             {
-                for (int x = 0; x < board.playerGrid.GetLength(0); x++)
+                for (int x = 0; x < JGameController.instance.board.playerGrid.GetLength(0); x++)
                 {
-                    playersGridGo[x, y].SetActive(board.GetValueAt(x, y, board.playerGrid));
+                    playersGridGo[x, y].SetActive(JGameController.instance.board.GetValueAt(x, y, JGameController.instance.board.playerGrid));
                 }
             }
 

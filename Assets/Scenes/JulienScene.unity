@@ -1391,6 +1391,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1416508018}
   - component: {fileID: 1416508017}
+  - component: {fileID: 1416508019}
+  - component: {fileID: 1416508020}
   m_Layer: 0
   m_Name: --GameController--
   m_TagString: Untagged
@@ -1410,7 +1412,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdfa78a113dd1b4438576b346d889dc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameState: 1
   board: {fileID: 622219101}
+  carsController: {fileID: 1416508020}
+  _timeBetweenUpdatingGame: 0.7
+  _percentToHaveBaby: 0.2
+  _timeBtwPlayerAction: 0.1
+  _playerColumn: 0
 --- !u!4 &1416508018
 Transform:
   m_ObjectHideFlags: 0
@@ -1425,6 +1433,55 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1416508019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416508016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6d195cf845f0124b95e79c711e8188e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1416508020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416508016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8c4f4147611484684007dfa73dc662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ListOfCombinations:
+  - combInt: 01000000020000000300000004000000
+  - combInt: 02000000010000000300000004000000
+  - combInt: 03000000010000000200000004000000
+  - combInt: 01000000030000000200000004000000
+  - combInt: 02000000030000000100000004000000
+  - combInt: 03000000020000000100000004000000
+  - combInt: 03000000020000000400000001000000
+  - combInt: 02000000030000000400000001000000
+  - combInt: 04000000030000000200000001000000
+  - combInt: 03000000040000000200000001000000
+  - combInt: 02000000040000000300000001000000
+  - combInt: 04000000020000000300000001000000
+  - combInt: 04000000010000000300000002000000
+  - combInt: 01000000040000000300000002000000
+  - combInt: 03000000040000000100000002000000
+  - combInt: 04000000030000000100000002000000
+  - combInt: 01000000030000000400000002000000
+  - combInt: 03000000010000000400000002000000
+  - combInt: 02000000010000000400000003000000
+  - combInt: 01000000020000000400000003000000
+  - combInt: 04000000020000000100000003000000
+  - combInt: 02000000040000000100000003000000
+  - combInt: 01000000040000000200000003000000
+  - combInt: 04000000010000000200000003000000
 --- !u!1 &1563297848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1737,7 +1794,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d611e522cfa724a8ea19b155b6d5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 622219101}
   carColumns:
   - {fileID: 1642382574}
   - {fileID: 982269033}
@@ -1748,7 +1804,6 @@ MonoBehaviour:
   - {fileID: 1835223523}
   - {fileID: 761288557}
   - {fileID: 1078304107}
-  playerColumn: 0
 --- !u!4 &1644637584
 Transform:
   m_ObjectHideFlags: 0

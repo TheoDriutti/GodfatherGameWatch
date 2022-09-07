@@ -4,40 +4,65 @@ using UnityEngine;
 
 public class JGameController : MonoBehaviour
 {
-    [SerializeField] float _timeBtwPlayerAction = 0.1f;
-    private float _timeBeforePlayerAction;
-
-    //Where the player start
-    int _playerColumn = 0;  
-
+    public static JGameController instance; 
+    public enum GameState
+    {
+        Lauch,
+        Game,
+        GameOver,
+        End,
+    }
+    public GameState gameState;
     public JGameBoard board;
+    public JCarsController carsController;
+
+    [Header("GameController")]
+    [Tooltip("Time Btw Each update of the Game")]
+    [SerializeField] float _timeBetweenUpdatingGame = 0.7f; 
+    private float _timeBeforeUpdatingGame;
+    [SerializeField] float _percentToHaveBaby = 0.2f;
+
+    [Header("PlayerController")]
+    [Tooltip("Time Btw Player Movement")]
+    public float _timeBtwPlayerAction = 0.1f;
+
+    [Tooltip("Which position the Player Start")]
+    public int _playerColumn = 0;  
+
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            Debug.LogError("More than one instance in the scene");
+        }
+        instance = this;
+
+        gameState = GameState.Game;
+    }
+
+    private void Start()
+    {
+        _timeBeforeUpdatingGame = _timeBetweenUpdatingGame;
+    }
 
     private void Update()
     {
-        board.SetValueAt(_playerColumn, board.playerGrid.GetLength(1) - 1, board.playerGrid, false);
+        _timeBeforeUpdatingGame -= Time.deltaTime;
 
-        _timeBeforePlayerAction -= Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.RightArrow) && (_timeBeforePlayerAction < 0))
+        if(_timeBeforeUpdatingGame < 0)
         {
-            _playerColumn++;
-            if (_playerColumn < 0) _playerColumn = 0;
-            if (_playerColumn > 3) _playerColumn = 3;
+            UpdateGame();
+            ResetGameTime();
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) && (_timeBeforePlayerAction < 0))
-        {
-            _playerColumn--;
-            if (_playerColumn < 0) _playerColumn = 0;
-            if (_playerColumn > 3) _playerColumn = 3;
-        }
-
-        board.SetValueAt(_playerColumn, board.playerGrid.GetLength(1) - 1, board.playerGrid);
-
-
     }
 
-    private void MovePlayer()
+    private void UpdateGame()
     {
-                
+        carsController.UpdateCars();
+    }
+
+    private void ResetGameTime()
+    {
+        _timeBeforeUpdatingGame = _timeBetweenUpdatingGame;
     }
 }
