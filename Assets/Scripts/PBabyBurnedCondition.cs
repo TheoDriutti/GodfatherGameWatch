@@ -24,14 +24,6 @@ public class PBabyBurnedCondition : MonoBehaviour
         failImage3.enabled = false;
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            BabyBurned();
-        }
-    }
-
     void BabyBurned()
     {
         numbOfFail++;

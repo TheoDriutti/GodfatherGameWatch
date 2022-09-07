@@ -23,13 +23,7 @@ public class PCarMissedCondition : MonoBehaviour
         failImage3 = gameObject.transform.GetChild(3).gameObject.GetComponent<Image>();
         failImage3.enabled = false;
     }
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            CarMissed();
-        }
-    }
+
     void CarMissed()
     {
         numbOfFail++;
@@ -38,15 +32,15 @@ public class PCarMissedCondition : MonoBehaviour
             case 1:
                 failText.enabled = true;
                 failImage1.enabled = true;
-                //Play missed car animation 3 times
+                // Play missed car animation 3 times
                 break;
             case 2:
                 failImage2.enabled = true;
-                //Play missed car animation 3 times
+                // Play missed car animation 3 times
                 break;
             case 3:
                 failImage3.enabled = true;
-                //Play missed car animation until game A button is pressed
+                // Play missed car animation until game A button is pressed
                 break;
         }
     }

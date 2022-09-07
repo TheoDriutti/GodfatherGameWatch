@@ -12,6 +12,7 @@ public class PScoreAndWatch : MonoBehaviour
     TextMeshProUGUI tens;
     TextMeshProUGUI thousands;
     bool gameStarted;
+    bool timeDisplayed;
     int score;
 
     void Start()
@@ -32,14 +33,22 @@ public class PScoreAndWatch : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            AddScore();  
+            AddScore();
         }
     }
 
+    // Affiche l'heure quand le boutton "Time" est effoncé
     public void DisplayTime()
     {
+        // Cache le score si la partie est en cours 
+        if (gameStarted == true)
+        {
+            tens.enabled = false;
+            thousands.enabled = false;
+        }
         timeText.enabled = true;
-        timeText.text = DateTime.Now.ToString("HH:mm");
+        timeDisplayed = true;
+        timeText.text = DateTime.Now.ToString("hh:mm");
         if (DateTime.Now.ToString("tt") == "AM")
         {
             am.enabled = true;
@@ -50,24 +59,54 @@ public class PScoreAndWatch : MonoBehaviour
         }
     }
 
-    public void AddScore()
+    // Cache l'heure quand le bouton "Time" est relaché
+    public void HideTime()
     {
-        if (gameStarted == false)
+        // Affiche le score si la partie est en cours 
+        if (gameStarted == true)
         {
-            gameStarted = true;
-            timeText.enabled = false;
             tens.enabled = true;
             thousands.enabled = true;
         }
-        /*else
+        timeText.enabled = false;
+        timeDisplayed = false;
+        if (DateTime.Now.ToString("tt") == "AM")
         {
-            score++;
-            tens = score;
-            if (score >= 100)
-            {
-                tens = " ";
-                thousands = thousands++;
-            }
-        }*/
+            am.enabled = false;
+        }
+        else
+        {
+            pm.enabled = false;
+        }
+    }
+
+    public void GameStarted()
+    {
+        // Affichage du score quand la partie commence
+        if (gameStarted == false)
+        {
+            gameStarted = true;
+            tens.enabled = true;
+            thousands.enabled = true;
+        }
+    }
+    public void AddScore()
+    {
+        score++;
+        // Ajoute un zero à la dizaine quand le score est inférieur à 10
+        if (score % 100 < 10)
+        {
+            tens.text = 0 + (score % 100).ToString();
+        }
+        // Affiche le score sur les chiffre de la dizaine
+        else
+        {
+            tens.text = (score % 100).ToString();
+        }
+        // Affiche le score sur les chiffre du millier
+        if (score >= 100)
+        {
+            thousands.text = (score / 100).ToString();
+        }
     }
 }
