@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class TCarGrid : MonoBehaviour
 {
-    bool[,] grid = new bool[5, 6];
+    [HideInInspector] public bool[,] grid = new bool[4, 5];
+
+    private static TCarGrid _instance;
+    public static TCarGrid i { get { return _instance; } }
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     public bool GetValueAt(int x, int y)
     {

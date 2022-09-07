@@ -1,40 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TGameController : MonoBehaviour
 {
-    public float minimumFramePeriod;
+    private static TGameController _instance;
+    public static TGameController i { get { return _instance; } }
 
-    float _frameTimer = 0f;
+    public float frameDuration;
+    public Text text;
 
-    // Start is called before the first frame update
-    void Start()
+    private float _frameTimer = 0f;
+    private int _currentFrame;
+
+    void Awake()
     {
-        
+        _instance = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        while (true)
+        if (_frameTimer < frameDuration)
         {
-            if (_frameTimer < minimumFramePeriod)
-            {
-                _frameTimer++;
-            } else
-            {
-                _frameTimer = 0f;
-                PlayFrame();
-            }
-
+            _frameTimer += Time.deltaTime;
+        } else
+        {
+            _frameTimer = 0f;
+            PlayFrame();
         }
     }
 
     void PlayFrame()
     {
+        _currentFrame++;
+        text.text = _currentFrame.ToString();
         TCarController.i.UpdateCars();
     }
 
+    public int GetCurrentFrame()
+    {
+        return _currentFrame;
+    }
 
 }
