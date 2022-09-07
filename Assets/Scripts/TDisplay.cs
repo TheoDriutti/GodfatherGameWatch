@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class TDisplay : MonoBehaviour
 {
-    Transform[,] grid = new Transform[5, 6];
-
-    public TCarGrid carGrid;
+    Transform[,] carObjectGrid = new Transform[4, 5];
+     
+    public TCarGrid carBoolGrid;
     public Transform gridRoot;
 
     // Start is called before the first frame update
     void Start()
     {
         SetupGrid();
+        Clear(carBoolGrid.grid);
         StartCoroutine(UpdateDisplay());
     }
 
@@ -24,7 +25,7 @@ public class TDisplay : MonoBehaviour
             int y = 0;
             foreach (Transform piece in col)
             {
-                grid[x, y] = piece;
+                carObjectGrid[x, y] = piece;
 
                 y++;    
             }
@@ -32,21 +33,27 @@ public class TDisplay : MonoBehaviour
         }
     }
 
+    public void Clear(bool[,] grid)
+    {
+        for (int x = 0; x < grid.GetLength(0); x++)
+        {
+            for (int y = 0; y < grid.GetLength(1); y++)
+            {
+                grid[x, y] = false;
+            }
+        }
+    }
+
     IEnumerator UpdateDisplay()
     {
         while (true)
         {
-            int x = 0;
-            foreach (Transform col in grid)
+            for (int x = 0; x < carObjectGrid.GetLength(0); x++)
             {
-                int y = 0;
-                foreach (Transform piece in col)
+                for (int y = 0; y < carObjectGrid.GetLength(1); y++)
                 {   
-                    grid[x, y].gameObject.SetActive(carGrid.GetValueAt(x, y));
-
-                    y++;
+                    carObjectGrid[x, y].gameObject.SetActive(carBoolGrid.GetValueAt(x, y));
                 }
-                x++;
             }
 
             yield return null;
