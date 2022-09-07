@@ -5,14 +5,12 @@ using UnityEngine;
 public class JulienPlayerController : MonoBehaviour
 {
     [SerializeField] List<GameObject> PlayerPos = new List<GameObject>();
-
     [Tooltip("Position from O to 3 where the player start")]
     [SerializeField] int _playerStartPos = 0;
     private int _playerCurrentPos;
     [SerializeField] float _timeBtwPlayerAction = 0.1f;
     private float _timeBeforePlayerAction;
-    
-    void Start()
+    private void Start()
     {
         PlayerPos[_playerStartPos].SetActive(true);
         _playerCurrentPos = _playerStartPos;
