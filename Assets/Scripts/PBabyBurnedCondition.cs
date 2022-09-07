@@ -23,6 +23,7 @@ public class PBabyBurnedCondition : MonoBehaviour
         failImage3 = gameObject.transform.GetChild(3).gameObject.GetComponent<Image>();
         failImage3.enabled = false;
     }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
@@ -30,6 +31,7 @@ public class PBabyBurnedCondition : MonoBehaviour
             BabyBurned();
         }
     }
+
     void BabyBurned()
     {
         numbOfFail++;
@@ -38,12 +40,15 @@ public class PBabyBurnedCondition : MonoBehaviour
             case 1:
                 failText.enabled = true;
                 failImage1.enabled = true;
+                //Play burned baby animation 3 times
                 break;
             case 2:
                 failImage2.enabled = true;
+                //Play burned baby animation 3 times
                 break;
             case 3:
                 failImage3.enabled = true;
+                //Play burned baby animation until game A button is pressed
                 break;
         }
     }

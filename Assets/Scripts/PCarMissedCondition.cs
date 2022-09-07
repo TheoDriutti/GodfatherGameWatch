@@ -38,12 +38,15 @@ public class PCarMissedCondition : MonoBehaviour
             case 1:
                 failText.enabled = true;
                 failImage1.enabled = true;
+                //Play missed car animation 3 times
                 break;
             case 2:
                 failImage2.enabled = true;
+                //Play missed car animation 3 times
                 break;
             case 3:
                 failImage3.enabled = true;
+                //Play missed car animation until game A button is pressed
                 break;
         }
     }
