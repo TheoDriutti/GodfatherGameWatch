@@ -24,7 +24,7 @@ public class PBabyBurnedCondition : MonoBehaviour
         failImage3.enabled = false;
     }
 
-    void BabyBurned()
+    void BabyBurned(GameObject isBurnedBaby)
     {
         numbOfFail++;
         switch (numbOfFail)
@@ -32,16 +32,27 @@ public class PBabyBurnedCondition : MonoBehaviour
             case 1:
                 failText.enabled = true;
                 failImage1.enabled = true;
-                //Play burned baby animation 3 times
+                StartCoroutine(BurnedBabyAnim(isBurnedBaby, 3));
                 break;
             case 2:
                 failImage2.enabled = true;
-                //Play burned baby animation 3 times
+                StartCoroutine(BurnedBabyAnim(isBurnedBaby, 3));
                 break;
             case 3:
                 failImage3.enabled = true;
-                //Play burned baby animation until game A button is pressed
+                StartCoroutine(BurnedBabyAnim(isBurnedBaby, 3));
                 break;
+        }
+    }
+
+    IEnumerator BurnedBabyAnim(GameObject _isBurnedBaby, int nmbOfFlash)
+    {
+        for (int i = 0; i <= nmbOfFlash; i++)
+        {
+            _isBurnedBaby.GetComponent<SpriteRenderer>().enabled = true;
+            yield return new WaitForSeconds(0.25f);
+            _isBurnedBaby.GetComponent<SpriteRenderer>().enabled = false;
+            yield return new WaitForSeconds(0.25f);
         }
     }
 }

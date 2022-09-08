@@ -24,7 +24,7 @@ public class PCarMissedCondition : MonoBehaviour
         failImage3.enabled = false;
     }
 
-    void CarMissed()
+    void CarMissed(GameObject isMissedCar)
     {
         numbOfFail++;
         switch (numbOfFail)
@@ -32,16 +32,27 @@ public class PCarMissedCondition : MonoBehaviour
             case 1:
                 failText.enabled = true;
                 failImage1.enabled = true;
-                // Play missed car animation 3 times
+                StartCoroutine(MissedCarAnim(isMissedCar, 3));
                 break;
             case 2:
                 failImage2.enabled = true;
-                // Play missed car animation 3 times
+                StartCoroutine(MissedCarAnim(isMissedCar, 3));
                 break;
             case 3:
                 failImage3.enabled = true;
-                // Play missed car animation until game A button is pressed
+                StartCoroutine(MissedCarAnim(isMissedCar, 3000));
                 break;
+        }
+    }
+
+    IEnumerator MissedCarAnim(GameObject _isMissedCar, int nmbOfFlash)
+    {
+        for(int i = 0; i <= nmbOfFlash; i++)
+        {
+            _isMissedCar.GetComponent<SpriteRenderer>().enabled = true;
+            yield return new WaitForSeconds(0.25f);
+            _isMissedCar.GetComponent<SpriteRenderer>().enabled = false;
+            yield return new WaitForSeconds(0.25f);
         }
     }
 }
