@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class JDisplay : MonoBehaviour
 {
-    [Tooltip("The game board that indicates what pieces are to be displayed")]
-    //public JGameBoard board;
-
     public GameObject[] carColumns;
     public GameObject[] players;
 
@@ -16,7 +13,7 @@ public class JDisplay : MonoBehaviour
         SetupPlayerGrid(JGameController.instance.board.playerGridGo);
         DisplayTwoDimensionnalGrid(JGameController.instance.board.carGridGo);
         DisplayTwoDimensionnalGrid(JGameController.instance.board.playerGridGo);
-        StartCoroutine(UpdateDisplay(JGameController.instance.board.carGridGo, JGameController.instance.board.playerGridGo));    
+        StartCoroutine(UpdateDisplay(JGameController.instance.board.carGridGo, JGameController.instance.board.playerGridGo));
     }
 
     public void SetupCarsGrid(GameObject[,] gridGo)
@@ -68,8 +65,51 @@ public class JDisplay : MonoBehaviour
                 }
             }
 
-
+            DisplayOil();
+            UpdatePlayerOil();
             yield return null;
+            
+        }
+    }
+
+    private void DisplayOil()
+    {
+        for (int x = 0; x < 4; x++)
+        {
+            switch(JGameController.instance.playerController.NumberOfOil)
+            {
+                case 0:
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    break;
+                case 1:
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+                    break;
+                case 2:
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+                    break;
+                case 3:
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+                    JGameController.instance.board.playerGridGo[x, 0].gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+                    break;
+            }
+        }
+    }
+
+    private void UpdatePlayerOil()
+    {
+        int playerPosClamp = Mathf.Clamp(JGameController.instance._playerColumn, 0, 3);
+        if (JGameController.instance.board.carGrid[playerPosClamp, 0])
+        {
+            JGameController.instance.playerController.NumberOfOil--;
+            JGameController.instance.board.carGrid[playerPosClamp, 0] = false;
         }
     }
 }

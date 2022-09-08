@@ -16,6 +16,7 @@ public class JGameController : MonoBehaviour
     public GameState gameState;
     public JGameBoard board;
     public JCarsController carsController;
+    public JPlayerController playerController;
 
     [Header("GameController")]
     [Tooltip("Time Btw Each update of the Game")]
