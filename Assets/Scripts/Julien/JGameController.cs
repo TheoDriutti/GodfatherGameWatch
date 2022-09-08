@@ -9,12 +9,14 @@ public class JGameController : MonoBehaviour
     {
         Lauch,
         Game,
+        MissPause,
         GameOver,
         End,
     }
     public GameState gameState;
     public JGameBoard board;
     public JCarsController carsController;
+    public JPlayerController playerController;
 
     [Header("GameController")]
     [Tooltip("Time Btw Each update of the Game")]
@@ -49,7 +51,7 @@ public class JGameController : MonoBehaviour
     {
         _timeBeforeUpdatingGame -= Time.deltaTime;
 
-        if(_timeBeforeUpdatingGame < 0)
+        if (_timeBeforeUpdatingGame < 0)
         {
             UpdateGame();
             ResetGameTime();

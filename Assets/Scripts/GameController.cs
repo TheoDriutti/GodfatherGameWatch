@@ -4,16 +4,32 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class TGameController : MonoBehaviour
+public class GameController : MonoBehaviour
 {
-    private static TGameController _instance;
-    public static TGameController i { get { return _instance; } }
+    private static GameController _instance;
+    public static GameController instance { get { return _instance; } }
+    public enum GameState
+    {
+        Lauch,
+        Game,
+        MissPause,
+        GameOver,
+        End,
+    }
+    public GameState gameState;
+
+    public GameBoard board;
+    public PlayerController playerController;
+
+    [Header("PlayerController")]
+    [Tooltip("Time Btw Player Movement")]
+    public float _timeBtwPlayerAction = 0.1f;
+    [Tooltip("Which position the Player Start")]
+    public int _playerColumn = 0;
 
     public float frameDuration;
-    public Text text;
 
     public float pauseTime;
-    public float flickerTime;
 
     private float _frameTimer = 0f;
     private int _currentFrame;
@@ -24,12 +40,13 @@ public class TGameController : MonoBehaviour
     void Awake()
     {
         _instance = this;
+        gameState = GameState.Game;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (JGameController.instance.gameState == JGameController.GameState.Game)
+        if (gameState == GameState.Game)
         {
             if (_frameTimer < frameDuration)
             {
@@ -39,7 +56,7 @@ public class TGameController : MonoBehaviour
                 _frameTimer = 0f;
                 PlayFrame();
             }
-        } else if (JGameController.instance.gameState == JGameController.GameState.MissPause)
+        } else if (gameState == GameState.MissPause)
         {
             if (_pauseTimer < pauseTime)
             {
@@ -50,7 +67,7 @@ public class TGameController : MonoBehaviour
                 if (_missCount < 3)
                 {
                     _pauseTimer = 0f;
-                    JGameController.instance.gameState = JGameController.GameState.Game;
+                    gameState = GameState.Game;
                 } else
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -62,13 +79,12 @@ public class TGameController : MonoBehaviour
     public void Miss()
     {
         _missCount++;
-        JGameController.instance.gameState = JGameController.GameState.MissPause;
+        gameState = GameState.MissPause;
     }
 
     void PlayFrame()
     {
         _currentFrame++;
-        text.text = _currentFrame.ToString();
         TCarController.i.UpdateCars();
     }
 
@@ -76,5 +92,4 @@ public class TGameController : MonoBehaviour
     {
         return _currentFrame;
     }
-
 }

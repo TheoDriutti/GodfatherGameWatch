@@ -1,10 +1,8 @@
 using UnityEngine;
 
-public class JGameBoard : MonoBehaviour
+public class GameBoard : MonoBehaviour
 {
-    public bool[,] carGrid = new bool[4, 4];
     public bool[,] playerGrid = new bool[5, 1];
-    public GameObject[,] carGridGo = new GameObject[4, 4];
     public GameObject[,] playerGridGo = new GameObject[5, 1];
 
     public bool GetValueAt(int x, int y, bool[,] grid)
@@ -36,7 +34,6 @@ public class JGameBoard : MonoBehaviour
 
     private void Awake()
     {
-        Clear(carGrid);
         Clear(playerGrid);
     }
 }

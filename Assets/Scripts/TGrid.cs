@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TCarGrid : MonoBehaviour
+public class TGrid : MonoBehaviour
 {
     [HideInInspector] public bool[,] grid = new bool[4, 5];
 
-    private static TCarGrid _instance;
-    public static TCarGrid i { get { return _instance; } }
+    private static TGrid _instance;
+    public static TGrid i { get { return _instance; } }
 
     private void Awake()
     {

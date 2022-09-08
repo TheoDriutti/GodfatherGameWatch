@@ -6,8 +6,7 @@ public class TDisplay : MonoBehaviour
 {
     Transform[,] carObjectGrid = new Transform[4, 5];
      
-    public TCarGrid carBoolGrid;
-    public Transform gridRoot;
+    public TGrid carBoolGrid;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +19,7 @@ public class TDisplay : MonoBehaviour
     public void SetupGrid()
     {
         int x = 0;
-        foreach (Transform col in gridRoot)
+        foreach (Transform col in transform)
         {
             int y = 0;
             foreach (Transform piece in col)

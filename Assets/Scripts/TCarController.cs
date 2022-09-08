@@ -10,12 +10,13 @@ public class TCarController : MonoBehaviour
     [Tooltip("the number of frames between 2 moves on a column ; 1 is fast, 3 is slow")]
     public int speed;
 
-    public int oilSpeed;
+    public int oilSpeed; 
 
     [Tooltip("the number of frames between 2 car spawns")]
     public int spawnRate;
 
-    public TCarGrid grid;
+    public TGrid carGrid;
+    public TGrid strollerGrid;
 
     //
 
@@ -41,7 +42,7 @@ public class TCarController : MonoBehaviour
 
     public void UpdateCars()
     {
-        int currentFrame = TGameController.i.GetCurrentFrame();
+        int currentFrame = GameController.instance.GetCurrentFrame();
         if (_lastCarSpawnFrame + spawnRate < currentFrame)
         {
             _lastCarSpawnFrame = currentFrame;
@@ -54,7 +55,7 @@ public class TCarController : MonoBehaviour
 
     void MoveCars()
     {
-        int currentFrame = TGameController.i.GetCurrentFrame();
+        int currentFrame = GameController.instance.GetCurrentFrame();
         // checks all the lanes
         for (int lane = 0; lane < 4; lane++)
         {
@@ -63,23 +64,38 @@ public class TCarController : MonoBehaviour
             {
                 for (int row = 0; row < 5; row++)
                 {
+                    List<TGrid> updatedGrids = new List<TGrid>();
+                    
                     // finds the rows
-                    if (grid.GetValueAt(lane, row))
+                    if (carGrid.GetValueAt(lane, row))
                     {
-                        bool isReadyToMove = _lastMoveFrames[lane] + speed < currentFrame 
-                                             || (_laneStates[lane] == 3 && _lastMoveFrames[lane] + oilSpeed < currentFrame);
-                        if (isReadyToMove)
+                        updatedGrids.Add(carGrid);
+                    }
+                    if (strollerGrid.GetValueAt(lane, row))
+                    {
+                        updatedGrids.Add(strollerGrid);
+                    }
+
+                    if (updatedGrids.Count > 0)
+                    {
+                        foreach (TGrid grid in updatedGrids)
                         {
-                            grid.SetValueAt(lane, row, false);
-                            if (row > 1)
-                            {
-                                grid.SetValueAt(lane, row - 1);
-                            } else
+                            bool isReadyToMove = _lastMoveFrames[lane] + speed < currentFrame
+                                                || (_laneStates[lane] == 3 && _lastMoveFrames[lane] + oilSpeed < currentFrame);
+                            if (isReadyToMove)
                             {
                                 grid.SetValueAt(lane, row, false);
-                                _laneStates[lane]--;
+                                if (row > 1)
+                                {
+                                    grid.SetValueAt(lane, row - 1);
+                                }
+                                else
+                                {
+                                    grid.SetValueAt(lane, row, false);
+                                    _laneStates[lane]--;
+                                }
+                                _lastMoveFrames[lane] = currentFrame;
                             }
-                            _lastMoveFrames[lane] = currentFrame;
                         }
                     }
                 }
@@ -91,9 +107,12 @@ public class TCarController : MonoBehaviour
     {
         int spawnCol = serie[serieSpawnIndex] - 1;
 
+        TGrid grid = carGrid;
+        if (serieCounter > 2 && Random.Range(0, 4) == 0) grid = strollerGrid; // poussette 1 fois/4
+
         grid.SetValueAt(spawnCol, _spawnRow);   
         _laneStates[spawnCol]++;
-        _lastMoveFrames[spawnCol] = TGameController.i.GetCurrentFrame();
+        _lastMoveFrames[spawnCol] = GameController.instance.GetCurrentFrame();
 
         serieSpawnIndex++;
         if (serieSpawnIndex > 3)

@@ -10,7 +10,7 @@ public class PCarMissedCondition : MonoBehaviour
     Image failImage1;
     Image failImage2;
     Image failImage3;
-    private int numbOfFail;
+    private int numbOfFail = 0;
 
     void Start()
     {

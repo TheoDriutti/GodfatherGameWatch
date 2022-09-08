@@ -5,10 +5,13 @@ using UnityEngine;
 public class JPlayerController : MonoBehaviour
 {
     private float _timeBeforePlayerAction;
+    public int NumberOfOil;
+    private int _maxOfOil = 3;
     private void Start()
     {
         _timeBeforePlayerAction = JGameController.instance._timeBtwPlayerAction;
         ResetPlayerValue();
+        NumberOfOil = _maxOfOil;
     }
 
     private void Update()
@@ -18,10 +21,12 @@ public class JPlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow) && (_timeBeforePlayerAction < 0))
         {
             MovePlayerRight();
+            RefillPlayerOil();
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow) && (_timeBeforePlayerAction < 0))
         {
             MovePlayerLeft();
+            RefillPlayerOil();
         }
     }
 
@@ -30,7 +35,7 @@ public class JPlayerController : MonoBehaviour
         JGameController.instance.board.SetValueAt(JGameController.instance._playerColumn, JGameController.instance.board.playerGrid.GetLength(1) - 1, JGameController.instance.board.playerGrid, false);
 
         JGameController.instance._playerColumn++;
-        if (JGameController.instance._playerColumn > 3) JGameController.instance._playerColumn = 3;
+        if (JGameController.instance._playerColumn > JGameController.instance.board.playerGrid.GetLength(0)- 1) JGameController.instance._playerColumn = JGameController.instance.board.playerGrid.GetLength(0) - 1;
 
         ResetPlayerValue();
         ResetTime();
@@ -55,5 +60,14 @@ public class JPlayerController : MonoBehaviour
     {
         _timeBeforePlayerAction = JGameController.instance._timeBtwPlayerAction;
     }
+
+    private void RefillPlayerOil()
+    {
+        if (JGameController.instance._playerColumn == JGameController.instance.board.playerGrid.GetLength(0) - 1)
+        {
+            NumberOfOil = _maxOfOil;
+        }
+    }
+
 
 }
