@@ -35,7 +35,10 @@ public class GameController : MonoBehaviour
     private int _currentFrame;
 
     private float _pauseTimer = 0f;
-    private int _missCount = 0;
+    private int _carMissCount = 0;
+    private int _babyMissCount = 0;
+    private int _missedCarCol;
+    private int _missedBabyCol;
 
     void Awake()
     {
@@ -64,10 +67,13 @@ public class GameController : MonoBehaviour
 
             } else
             {
-                if (_missCount < 3)
+                if (_carMissCount < 3 && _babyMissCount < 2)
                 {
                     _pauseTimer = 0f;
                     gameState = GameState.Game;
+                    TCarController.i.carGrid.SetValueAt(_missedCarCol, 0, false);
+                    TCarController.i.strollerGrid.SetValueAt(_missedBabyCol, 0, false);
+                    
                 } else
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -76,10 +82,18 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void Miss()
+    public void CarMiss(int lane)
     {
-        _missCount++;
+        _carMissCount++;
         gameState = GameState.MissPause;
+        _missedCarCol = lane;
+    }
+
+    public void BabyMiss(int lane)
+    {
+        _babyMissCount++;
+        gameState = GameState.MissPause;
+        _missedBabyCol = lane;
     }
 
     void PlayFrame()

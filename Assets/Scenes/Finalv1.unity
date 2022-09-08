@@ -134,6 +134,8 @@ GameObject:
   - component: {fileID: 12777610}
   - component: {fileID: 12777611}
   - component: {fileID: 12777612}
+  - component: {fileID: 12777614}
+  - component: {fileID: 12777613}
   m_Layer: 0
   m_Name: CONTROLLER
   m_TagString: Untagged
@@ -172,7 +174,7 @@ MonoBehaviour:
   playerController: {fileID: 1726349745}
   _timeBtwPlayerAction: 0.1
   _playerColumn: 0
-  frameDuration: 0.25
+  frameDuration: 0.1
   pauseTime: 2
 --- !u!114 &12777612
 MonoBehaviour:
@@ -191,6 +193,31 @@ MonoBehaviour:
   spawnRate: 18
   carGrid: {fileID: 1795986257}
   strollerGrid: {fileID: 784731985}
+  _laneStates: 00000000000000000000000000000000
+--- !u!114 &12777613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12777609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36bf79f4cfad6442a8f16bc1b25420e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &12777614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12777609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3d5d253cf16a24b92b087ca1165f74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &37429561
 GameObject:
   m_ObjectHideFlags: 0

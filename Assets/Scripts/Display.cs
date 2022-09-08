@@ -22,7 +22,8 @@ public class Display : MonoBehaviour
 
     IEnumerator UpdateDisplay(GameObject[,] playersGridGo)
     {
-        while (GameController.instance.gameState == GameController.GameState.Game)
+        //while (GameController.instance.gameState == GameController.GameState.Game)
+        while (true)
         {
             for (int y = 0; y < GameController.instance.board.playerGrid.GetLength(1); y++)
             {

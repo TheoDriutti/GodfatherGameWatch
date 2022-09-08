@@ -16,21 +16,27 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        _timeBeforePlayerAction -= Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.RightArrow) && (_timeBeforePlayerAction < 0))
+        if (GameController.instance.gameState == GameController.GameState.Game)
         {
-            MovePlayerRight();
-            RefillPlayerOil();
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow) && (_timeBeforePlayerAction < 0))
-        {
-            MovePlayerLeft();
-            RefillPlayerOil();
+            _timeBeforePlayerAction -= Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.RightArrow) && (_timeBeforePlayerAction < 0))
+            {
+                MovePlayerRight();
+                RefillPlayerOil();
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) && (_timeBeforePlayerAction < 0))
+            {
+                MovePlayerLeft();
+                RefillPlayerOil();
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Fill();
+            }
         }
     }
 
-    private void MovePlayerRight()
+    public void MovePlayerRight()
     {
         GameController.instance.board.SetValueAt(GameController.instance._playerColumn, GameController.instance.board.playerGrid.GetLength(1) - 1, GameController.instance.board.playerGrid, false);
 
@@ -41,7 +47,7 @@ public class PlayerController : MonoBehaviour
         ResetTime();
     }
 
-    private void MovePlayerLeft()
+    public void MovePlayerLeft()
     {
         GameController.instance.board.SetValueAt(GameController.instance._playerColumn, GameController.instance.board.playerGrid.GetLength(1) - 1, GameController.instance.board.playerGrid, false);
 
@@ -50,6 +56,29 @@ public class PlayerController : MonoBehaviour
 
         ResetPlayerValue();
         ResetTime();
+    }
+
+    public void Fill()
+    {
+        int playerColumn = GameController.instance._playerColumn;
+        if (NumberOfOil > 0)
+        {
+            if (TCarController.i.carGrid.GetValueAt(playerColumn, 0))
+            {
+                NumberOfOil--;
+                TCarController.i.carGrid.SetValueAt(playerColumn, 0, false);
+                TCarController.i._laneStates[playerColumn]--;
+            } else
+            {
+                if (TCarController.i.strollerGrid.GetValueAt(playerColumn, 0))
+                {
+                    PBabyBurnedCondition.i.BabyBurned(playerColumn);
+                } else
+                {
+                    TCarController.i.MakeOily(playerColumn);
+                }
+            }
+        }
     }
 
     private void ResetPlayerValue()
@@ -68,6 +97,4 @@ public class PlayerController : MonoBehaviour
             NumberOfOil = _maxOfOil;
         }
     }
-
-
 }

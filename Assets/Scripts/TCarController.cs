@@ -30,7 +30,7 @@ public class TCarController : MonoBehaviour
 
     private int[] _lastMoveFrames = new int[4];
 
-    private int[] _laneStates = new int[4]; // 0 : free lane ; 1 : occupied lane ; 2 : oily lane ; 3 occupied + oily lane
+    [HideInInspector] public int[] _laneStates = new int[4]; // 0 : free lane ; 1 : occupied lane ; 2 : oily lane ; 3 occupied + oily lane
 
     //
 
@@ -63,41 +63,42 @@ public class TCarController : MonoBehaviour
             if (_laneStates[lane] == 1 || _laneStates[lane] == 3)
             {
                 for (int row = 0; row < 5; row++)
-                {
-                    List<TGrid> updatedGrids = new List<TGrid>();
-                    
+                {                    
                     // finds the rows
                     if (carGrid.GetValueAt(lane, row))
                     {
-                        updatedGrids.Add(carGrid);
+                        bool isReadyToMove = _lastMoveFrames[lane] + speed < currentFrame
+                                                   || (_laneStates[lane] == 3 && _lastMoveFrames[lane] + oilSpeed < currentFrame);
+                        if (isReadyToMove)
+                        {
+                            if (row > 0)
+                            {
+                                carGrid.SetValueAt(lane, row - 1);
+                                carGrid.SetValueAt(lane, row, false);
+                            }
+                            else
+                            {
+                                PCarMissedCondition.i.CarMissed(lane);
+                                _laneStates[lane]--;
+                            }
+                            _lastMoveFrames[lane] = currentFrame;
+                        }
                     }
                     if (strollerGrid.GetValueAt(lane, row))
                     {
-                        updatedGrids.Add(strollerGrid);
-                    }
-
-                    if (updatedGrids.Count > 0)
-                    {
-                        foreach (TGrid grid in updatedGrids)
+                        bool isReadyToMove = _lastMoveFrames[lane] + speed < currentFrame
+                                                   || (_laneStates[lane] == 3 && _lastMoveFrames[lane] + oilSpeed < currentFrame);
+                        if (isReadyToMove)
                         {
-                            bool isReadyToMove = _lastMoveFrames[lane] + speed < currentFrame
-                                                || (_laneStates[lane] == 3 && _lastMoveFrames[lane] + oilSpeed < currentFrame);
-                            if (isReadyToMove)
+                            strollerGrid.SetValueAt(lane, row, false);
+                            if (row > 0)
                             {
-                                grid.SetValueAt(lane, row, false);
-                                if (row > 1)
-                                {
-                                    grid.SetValueAt(lane, row - 1);
-                                }
-                                else
-                                {
-                                    grid.SetValueAt(lane, row, false);
-                                    _laneStates[lane]--;
-                                }
-                                _lastMoveFrames[lane] = currentFrame;
+                                strollerGrid.SetValueAt(lane, row - 1);
                             }
+                            _lastMoveFrames[lane] = currentFrame;
                         }
                     }
+
                 }
             }
         }
@@ -119,6 +120,12 @@ public class TCarController : MonoBehaviour
         {
             MoveToNextSerie();
         }
+    }
+
+    public void MakeOily(int pos)
+    {
+        // change le sprite
+        _laneStates[pos] += 2;
     }
 
     void MoveToNextSerie()
@@ -169,7 +176,6 @@ public class TCarController : MonoBehaviour
             }
         }
 
-        Debug.Log(newSerie[0] + "" + newSerie[1] + newSerie[2] + newSerie[3]); 
         return newSerie;
     }
 }
