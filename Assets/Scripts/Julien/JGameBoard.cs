@@ -3,9 +3,9 @@ using UnityEngine;
 public class JGameBoard : MonoBehaviour
 {
     public bool[,] carGrid = new bool[4, 4];
-    public bool[,] playerGrid = new bool[4, 1];
+    public bool[,] playerGrid = new bool[5, 1];
     public GameObject[,] carGridGo = new GameObject[4, 4];
-    public GameObject[,] playerGridGo = new GameObject[4, 1];
+    public GameObject[,] playerGridGo = new GameObject[5, 1];
 
     public bool GetValueAt(int x, int y, bool[,] grid)
     {
@@ -14,8 +14,6 @@ public class JGameBoard : MonoBehaviour
 
     public void SetValueAt(int x, int y, bool[,] grid, bool newValue = true)
     {
-        Debug.Log(x + "x");
-        Debug.Log(y + "y");
         grid[x, y] = newValue;
     }
 

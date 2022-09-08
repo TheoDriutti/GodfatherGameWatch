@@ -15,10 +15,8 @@ public class JCarsController : MonoBehaviour
 
     public List<Combination> ListOfCombinations = new List<Combination> ();
 
-    private Combination comb;
-    private int _indexComb = 0;
-    private bool _firstCarAlreadySpawned;
-    private bool _carAlreadySpawned;
+    public Combination comb;
+    public int _indexComb = 0;
     private bool _checkLastLine;
     public void UpdateCars()
     {
@@ -32,14 +30,8 @@ public class JCarsController : MonoBehaviour
                     {
                         JGameController.instance.board.SetValueAtNextPosition(x, y, JGameController.instance.board.carGrid); 
                     }
-                    else if(!_firstCarAlreadySpawned)
-                    {
+                    else //si voiture sur deriere ligne     
                         JGameController.instance.board.carGrid[x, y] = false;
-                        JGameController.instance.board.SetValueAt(FindComb(), 3, JGameController.instance.board.carGrid);
-                        _carAlreadySpawned = true;
-                        _firstCarAlreadySpawned = true;
-                        
-                    }
                 }
 
             }
@@ -48,26 +40,24 @@ public class JCarsController : MonoBehaviour
 
         _checkLastLine = false;
 
-        if (!_carAlreadySpawned)
-        {
-            JGameController.instance.board.SetValueAt(FindComb(), 3, JGameController.instance.board.carGrid);
-        }
+        JGameController.instance.board.SetValueAt(FindComb(), 3, JGameController.instance.board.carGrid);
 
-        _carAlreadySpawned = false;
-        _firstCarAlreadySpawned = false;
+
     }
 
     private int FindComb()
     {
-        if (comb == null || _indexComb > 3)
+
+        if (comb.combInt.Count == 0 || _indexComb >= 3)
         {
             int rand = UnityEngine.Random.Range(0, 24);
             comb = ListOfCombinations[rand];
             _indexComb = 0;
         }
+        else
+            _indexComb++;
 
-        Debug.Log(comb.combInt[++_indexComb] - 1);
-        return comb.combInt[++_indexComb] - 1;
+        return comb.combInt[_indexComb] - 1;
     }
 
 }
