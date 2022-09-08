@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TGrid : MonoBehaviour
 {
-    [HideInInspector] public bool[,] grid = new bool[4, 5];
+    [HideInInspector] public bool[,] grid = new bool[4, 6];
 
     private static TGrid _instance;
     public static TGrid i { get { return _instance; } }

@@ -9,10 +9,11 @@ public class PBabyBurnedCondition : MonoBehaviour
     private static PBabyBurnedCondition _instance;
     public static PBabyBurnedCondition i { get { return _instance; } }
 
+    public TDisplay strollerDisplay;
+
     TextMeshProUGUI failText;
     Image failImage1;
     Image failImage2;
-    Image failImage3;
     private int numbOfFail;
 
     private void Awake()
@@ -22,35 +23,41 @@ public class PBabyBurnedCondition : MonoBehaviour
 
     void Start()
     {
-        //failText = gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-        //failText.enabled = false;
-        //failImage1 = gameObject.transform.GetChild(1).gameObject.GetComponent<Image>();
-        //failImage1.enabled = false;
-        //failImage2 = gameObject.transform.GetChild(2).gameObject.GetComponent<Image>();
-        //failImage2.enabled = false;
-        //failImage3 = gameObject.transform.GetChild(3).gameObject.GetComponent<Image>();
-        //failImage3.enabled = false;
+        failText = gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        failText.enabled = false;
+        failImage1 = gameObject.transform.GetChild(1).gameObject.GetComponent<Image>();
+        failImage1.enabled = false;
+        failImage2 = gameObject.transform.GetChild(2).gameObject.GetComponent<Image>();
+        failImage2.enabled = false;
     }
 
     public void BabyBurned(int lane)
     {
         numbOfFail++;
         GameController.instance.BabyMiss(lane);
+        GameObject burnedBaby = strollerDisplay.carObjectGrid[lane, 0].gameObject;
         switch (numbOfFail)
         {
             case 1:
-                //failText.enabled = true;
-                //failImage1.enabled = true;
-                //Play burned baby animation 3 times
+                failText.enabled = true;
+                failImage1.enabled = true;
+                StartCoroutine(BurnedBabyAnim(burnedBaby, 3));
                 break;
             case 2:
-                //failImage2.enabled = true;
-                //Play burned baby animation 3 times
+                failImage2.enabled = true;
+                StartCoroutine(BurnedBabyAnim(burnedBaby, 3000));
                 break;
-            case 3:
-                //failImage3.enabled = true;
-                //Play burned baby animation until game A button is pressed
-                break;
+        }
+    }
+
+    IEnumerator BurnedBabyAnim(GameObject _isBurnedBaby, int nmbOfFlash)
+    {
+        for (int i = 0; i <= nmbOfFlash; i++)
+        {
+            _isBurnedBaby.GetComponent<SpriteRenderer>().enabled = true;
+            yield return new WaitForSeconds(0.25f);
+            _isBurnedBaby.GetComponent<SpriteRenderer>().enabled = false;
+            yield return new WaitForSeconds(0.25f);
         }
     }
 }

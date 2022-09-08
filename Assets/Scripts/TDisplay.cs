@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class TDisplay : MonoBehaviour
 {
-    Transform[,] carObjectGrid = new Transform[4, 5];
-     
+    public Transform[,] carObjectGrid = new Transform[4, 6];
     public TGrid carBoolGrid;
 
     // Start is called before the first frame update

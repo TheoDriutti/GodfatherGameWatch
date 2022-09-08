@@ -20,7 +20,7 @@ public class TCarController : MonoBehaviour
 
     //
 
-    private int _spawnRow = 4;
+    private int _spawnRow = 5;
 
     private int[] serie = new int[] { 1, 2, 3, 4 };
     private int serieSpawnIndex = 0;
@@ -62,7 +62,7 @@ public class TCarController : MonoBehaviour
             // only if occupied
             if (_laneStates[lane] == 1 || _laneStates[lane] == 3)
             {
-                for (int row = 0; row < 5; row++)
+                for (int row = 0; row < 6; row++)
                 {                    
                     // finds the rows
                     if (carGrid.GetValueAt(lane, row))
