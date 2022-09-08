@@ -10,7 +10,7 @@ public class PCarMissedCondition : MonoBehaviour
     Image failImage1;
     Image failImage2;
     Image failImage3;
-    private int numbOfFail;
+    private int numbOfFail = 0;
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class PCarMissedCondition : MonoBehaviour
         failImage3.enabled = false;
     }
 
-    void CarMissed()
+    public void CarMissed()
     {
         numbOfFail++;
         switch (numbOfFail)
@@ -33,14 +33,17 @@ public class PCarMissedCondition : MonoBehaviour
                 failText.enabled = true;
                 failImage1.enabled = true;
                 // Play missed car animation 3 times
+                TGameController.i.Miss();
                 break;
             case 2:
                 failImage2.enabled = true;
                 // Play missed car animation 3 times
+                TGameController.i.Miss();
                 break;
             case 3:
                 failImage3.enabled = true;
                 // Play missed car animation until game A button is pressed
+                TGameController.i.Miss();
                 break;
         }
     }

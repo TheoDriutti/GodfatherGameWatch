@@ -9,6 +9,7 @@ public class JGameController : MonoBehaviour
     {
         Lauch,
         Game,
+        MissPause,
         GameOver,
         End,
     }
@@ -49,7 +50,7 @@ public class JGameController : MonoBehaviour
     {
         _timeBeforeUpdatingGame -= Time.deltaTime;
 
-        if(_timeBeforeUpdatingGame < 0)
+        if (_timeBeforeUpdatingGame < 0)
         {
             UpdateGame();
             ResetGameTime();

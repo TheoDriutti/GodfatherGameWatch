@@ -2644,13 +2644,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 996402882}
+  - component: {fileID: 996402883}
+  - component: {fileID: 996402884}
   m_Layer: 0
   m_Name: STROLLER_GRID
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &996402882
 Transform:
   m_ObjectHideFlags: 0
@@ -2659,7 +2661,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 996402881}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.78, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 536743515}
@@ -2669,6 +2671,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &996402883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996402881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be255c7278e5b943856c7131d255a60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &996402884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996402881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f909391882a3484db1635f78b80fead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carBoolGrid: {fileID: 996402883}
 --- !u!1 &1006735326
 GameObject:
   m_ObjectHideFlags: 0
@@ -2962,8 +2989,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1150668825}
-  - component: {fileID: 1150668824}
-  - component: {fileID: 1150668823}
   - component: {fileID: 1150668827}
   - component: {fileID: 1150668826}
   m_Layer: 0
@@ -2973,32 +2998,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1150668823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1150668822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5be255c7278e5b943856c7131d255a60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1150668824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1150668822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f909391882a3484db1635f78b80fead, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boolGrid: {fileID: 1150668823}
-  gridRoot: {fileID: 1290252240}
 --- !u!4 &1150668825
 Transform:
   m_ObjectHideFlags: 0
@@ -3027,6 +3026,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frameDuration: 0.03
   text: {fileID: 1384218434}
+  pauseTime: 2
+  flickerTime: 0
 --- !u!114 &1150668827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3042,7 +3043,8 @@ MonoBehaviour:
   speed: 6
   oilSpeed: 4
   spawnRate: 18
-  grid: {fileID: 1150668823}
+  carGrid: {fileID: 1290252241}
+  strollerGrid: {fileID: 996402883}
 --- !u!1 &1151089302
 GameObject:
   m_ObjectHideFlags: 0
@@ -3354,6 +3356,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1290252240}
+  - component: {fileID: 1290252241}
+  - component: {fileID: 1290252242}
   m_Layer: 0
   m_Name: CAR_GRID
   m_TagString: Untagged
@@ -3369,7 +3373,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1290252239}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.19, y: 0, z: 0}
+  m_LocalPosition: {x: 0.19, y: -0.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1065834554}
@@ -3379,6 +3383,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1290252241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290252239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be255c7278e5b943856c7131d255a60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1290252242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290252239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f909391882a3484db1635f78b80fead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carBoolGrid: {fileID: 1290252241}
 --- !u!1 &1384218432
 GameObject:
   m_ObjectHideFlags: 0

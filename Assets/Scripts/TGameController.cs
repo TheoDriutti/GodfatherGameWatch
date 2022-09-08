@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TGameController : MonoBehaviour
 {
@@ -11,8 +12,14 @@ public class TGameController : MonoBehaviour
     public float frameDuration;
     public Text text;
 
+    public float pauseTime;
+    public float flickerTime;
+
     private float _frameTimer = 0f;
     private int _currentFrame;
+
+    private float _pauseTimer = 0f;
+    private int _missCount = 0;
 
     void Awake()
     {
@@ -22,14 +29,40 @@ public class TGameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_frameTimer < frameDuration)
+        if (JGameController.instance.gameState == JGameController.GameState.Game)
         {
-            _frameTimer += Time.deltaTime;
-        } else
+            if (_frameTimer < frameDuration)
+            {
+                _frameTimer += Time.deltaTime;
+            } else
+            {
+                _frameTimer = 0f;
+                PlayFrame();
+            }
+        } else if (JGameController.instance.gameState == JGameController.GameState.MissPause)
         {
-            _frameTimer = 0f;
-            PlayFrame();
+            if (_pauseTimer < pauseTime)
+            {
+                _pauseTimer += Time.deltaTime;
+
+            } else
+            {
+                if (_missCount < 3)
+                {
+                    _pauseTimer = 0f;
+                    JGameController.instance.gameState = JGameController.GameState.Game;
+                } else
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
+            }
         }
+    }
+
+    public void Miss()
+    {
+        _missCount++;
+        JGameController.instance.gameState = JGameController.GameState.MissPause;
     }
 
     void PlayFrame()
