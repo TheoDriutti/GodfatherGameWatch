@@ -42,7 +42,7 @@ public class TCarController : MonoBehaviour
 
     public void UpdateCars()
     {
-        int currentFrame = TGameController.i.GetCurrentFrame();
+        int currentFrame = GameController.instance.GetCurrentFrame();
         if (_lastCarSpawnFrame + spawnRate < currentFrame)
         {
             _lastCarSpawnFrame = currentFrame;
@@ -55,7 +55,7 @@ public class TCarController : MonoBehaviour
 
     void MoveCars()
     {
-        int currentFrame = TGameController.i.GetCurrentFrame();
+        int currentFrame = GameController.instance.GetCurrentFrame();
         // checks all the lanes
         for (int lane = 0; lane < 4; lane++)
         {
@@ -112,7 +112,7 @@ public class TCarController : MonoBehaviour
 
         grid.SetValueAt(spawnCol, _spawnRow);   
         _laneStates[spawnCol]++;
-        _lastMoveFrames[spawnCol] = TGameController.i.GetCurrentFrame();
+        _lastMoveFrames[spawnCol] = GameController.instance.GetCurrentFrame();
 
         serieSpawnIndex++;
         if (serieSpawnIndex > 3)
