@@ -37,6 +37,7 @@ public class PCarMissedCondition : MonoBehaviour
     public void CarMissed(int lane)
     {
         numbOfFail++;
+        FindObjectOfType<AudioManager>().Play("CarMissed");
         GameController.instance.CarMiss(lane);
         GameObject isMissedCar = carDisplay.carObjectGrid[lane, 0].gameObject;
         switch (numbOfFail)
