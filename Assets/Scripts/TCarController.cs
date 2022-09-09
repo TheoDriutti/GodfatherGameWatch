@@ -17,6 +17,7 @@ public class TCarController : MonoBehaviour
 
     public TGrid carGrid;
     public TGrid strollerGrid;
+    public Transform oilyLaneGrid;
 
     //
 
@@ -130,7 +131,7 @@ public class TCarController : MonoBehaviour
 
     public void MakeOily(int pos)
     {
-        // change le sprite
+        oilyLaneGrid.GetChild(pos).gameObject.SetActive(true);
         _laneStates[pos] = LaneState.Oily;
     }
 
