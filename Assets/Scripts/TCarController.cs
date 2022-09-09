@@ -30,7 +30,13 @@ public class TCarController : MonoBehaviour
 
     private int[] _lastMoveFrames = new int[4];
 
-    [HideInInspector] public int[] _laneStates = new int[4]; // 0 : free lane ; 1 : occupied lane ; 2 : oily lane ; 3 occupied + oily lane
+    public enum LaneState
+    {
+        Normal,
+        Oily
+    };
+    private LaneState[] _laneStates = new LaneState[] { LaneState.Normal, LaneState.Normal, LaneState.Normal, LaneState.Normal };
+    [HideInInspector] public int[] _laneVehicleCounts = new int[] { 0, 0, 0, 0 };
 
     //
 
@@ -60,7 +66,7 @@ public class TCarController : MonoBehaviour
         for (int lane = 0; lane < 4; lane++)
         {
             // only if occupied
-            if (_laneStates[lane] == 1 || _laneStates[lane] == 3)
+            if (_laneVehicleCounts[lane] > 0)
             {
                 for (int row = 0; row < 6; row++)
                 {                    
@@ -68,26 +74,26 @@ public class TCarController : MonoBehaviour
                     if (carGrid.GetValueAt(lane, row))
                     {
                         bool isReadyToMove = _lastMoveFrames[lane] + speed < currentFrame
-                                                   || (_laneStates[lane] == 3 && _lastMoveFrames[lane] + oilSpeed < currentFrame);
+                                                   || (_laneStates[lane] == LaneState.Oily && _lastMoveFrames[lane] + oilSpeed < currentFrame);
                         if (isReadyToMove)
                         {
                             if (row > 0)
                             {
                                 carGrid.SetValueAt(lane, row - 1);
                                 carGrid.SetValueAt(lane, row, false);
+                                _lastMoveFrames[lane] = currentFrame;
                             }
                             else
                             {
                                 PCarMissedCondition.i.CarMissed(lane);
-                                _laneStates[lane]--;
+                                _laneVehicleCounts[lane]--;
                             }
-                            _lastMoveFrames[lane] = currentFrame;
                         }
                     }
                     if (strollerGrid.GetValueAt(lane, row))
                     {
                         bool isReadyToMove = _lastMoveFrames[lane] + speed < currentFrame
-                                                   || (_laneStates[lane] == 3 && _lastMoveFrames[lane] + oilSpeed < currentFrame);
+                                                   || (_laneStates[lane] == LaneState.Oily && _lastMoveFrames[lane] + oilSpeed < currentFrame);
                         if (isReadyToMove)
                         {
                             strollerGrid.SetValueAt(lane, row, false);
@@ -112,7 +118,7 @@ public class TCarController : MonoBehaviour
         if (serieCounter > 2 && Random.Range(0, 4) == 0) grid = strollerGrid; // poussette 1 fois/4
 
         grid.SetValueAt(spawnCol, _spawnRow);   
-        _laneStates[spawnCol]++;
+        _laneVehicleCounts[spawnCol]++;
         _lastMoveFrames[spawnCol] = GameController.instance.GetCurrentFrame();
 
         serieSpawnIndex++;
@@ -125,7 +131,7 @@ public class TCarController : MonoBehaviour
     public void MakeOily(int pos)
     {
         // change le sprite
-        _laneStates[pos] += 2;
+        _laneStates[pos] = LaneState.Oily;
     }
 
     void MoveToNextSerie()

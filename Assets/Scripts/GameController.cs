@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour
     private int _babyMissCount = 0;
     private int _missedCarCol;
     private int _missedBabyCol;
+    private bool isCarMiss = false;
 
     void Awake()
     {
@@ -76,9 +77,14 @@ public class GameController : MonoBehaviour
                 {
                     _pauseTimer = 0f;
                     gameState = GameState.Game;
-                    TCarController.i.carGrid.SetValueAt(_missedCarCol, 0, false);
-                    TCarController.i.strollerGrid.SetValueAt(_missedBabyCol, 0, false);
-                    
+                    if (isCarMiss)
+                    {
+                        TCarController.i.carGrid.SetValueAt(_missedCarCol, 0, false);
+                        isCarMiss = false;
+                    } else
+                    {
+                        TCarController.i.strollerGrid.SetValueAt(_missedBabyCol, 0, false);
+                    }
                 } else
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -92,6 +98,7 @@ public class GameController : MonoBehaviour
         _carMissCount++;
         gameState = GameState.MissPause;
         _missedCarCol = lane;
+        isCarMiss = true;
     }
 
     public void BabyMiss(int lane)

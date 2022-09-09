@@ -172,7 +172,7 @@ MonoBehaviour:
   playerController: {fileID: 1726349745}
   _timeBtwPlayerAction: 0.1
   _playerColumn: 0
-  frameDuration: 0.1
+  frameDuration: 0.2
   pauseTime: 2
 --- !u!114 &12777612
 MonoBehaviour:
@@ -191,7 +191,7 @@ MonoBehaviour:
   spawnRate: 18
   carGrid: {fileID: 1795986257}
   strollerGrid: {fileID: 784731985}
-  _laneStates: 00000000000000000000000000000000
+  _laneVehicleCounts: 00000000000000000000000000000000
 --- !u!1 &27317865
 GameObject:
   m_ObjectHideFlags: 0

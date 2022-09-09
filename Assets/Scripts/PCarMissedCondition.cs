@@ -61,9 +61,9 @@ public class PCarMissedCondition : MonoBehaviour
     {
         for (int i = 0; i <= nmbOfFlash; i++)
         {
-            _isMissedCar.GetComponent<SpriteRenderer>().enabled = true;
-            yield return new WaitForSeconds(0.25f);
             _isMissedCar.GetComponent<SpriteRenderer>().enabled = false;
+            yield return new WaitForSeconds(0.25f);
+            _isMissedCar.GetComponent<SpriteRenderer>().enabled = true;
             yield return new WaitForSeconds(0.25f);
         }
     }

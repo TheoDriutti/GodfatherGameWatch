@@ -61,13 +61,13 @@ public class PlayerController : MonoBehaviour
     public void Fill()
     {
         int playerColumn = GameController.instance._playerColumn;
-        if (NumberOfOil > 0)
+        if (NumberOfOil > 0 && playerColumn < 4)
         {
             if (TCarController.i.carGrid.GetValueAt(playerColumn, 0))
             {
                 NumberOfOil--;
                 TCarController.i.carGrid.SetValueAt(playerColumn, 0, false);
-                TCarController.i._laneStates[playerColumn]--;
+                TCarController.i._laneVehicleCounts[playerColumn]--;
             } else
             {
                 if (TCarController.i.strollerGrid.GetValueAt(playerColumn, 0))

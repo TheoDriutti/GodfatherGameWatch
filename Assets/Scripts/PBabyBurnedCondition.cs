@@ -54,9 +54,9 @@ public class PBabyBurnedCondition : MonoBehaviour
     {
         for (int i = 0; i <= nmbOfFlash; i++)
         {
-            _isBurnedBaby.GetComponent<SpriteRenderer>().enabled = true;
-            yield return new WaitForSeconds(0.25f);
             _isBurnedBaby.GetComponent<SpriteRenderer>().enabled = false;
+            yield return new WaitForSeconds(0.25f);
+            _isBurnedBaby.GetComponent<SpriteRenderer>().enabled = true;
             yield return new WaitForSeconds(0.25f);
         }
     }
