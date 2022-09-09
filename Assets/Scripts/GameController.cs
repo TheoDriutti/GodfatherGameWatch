@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
 
     public GameBoard board;
     public PlayerController playerController;
+    public PScoreAndWatch scoreAndWatch;
 
     [Header("PlayerController")]
     [Tooltip("Time Btw Player Movement")]
@@ -42,8 +43,7 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
-        _instance = this;
-        //gameState = GameState.Game;
+        _instance = this;       
     }
 
     public void StartGame()

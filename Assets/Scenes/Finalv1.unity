@@ -170,6 +170,7 @@ MonoBehaviour:
   gameState: 0
   board: {fileID: 1746973063}
   playerController: {fileID: 1726349745}
+  scoreAndWatch: {fileID: 6838541249268242893}
   _timeBtwPlayerAction: 0.1
   _playerColumn: 0
   frameDuration: 0.1

@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
         {
             if (TCarController.i.carGrid.GetValueAt(playerColumn, 0))
             {
+                GameController.instance.scoreAndWatch.AddScore();
                 NumberOfOil--;
                 TCarController.i.carGrid.SetValueAt(playerColumn, 0, false);
                 TCarController.i._laneStates[playerColumn]--;

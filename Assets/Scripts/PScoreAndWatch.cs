@@ -15,7 +15,7 @@ public class PScoreAndWatch : MonoBehaviour
     bool timeDisplayed;
     int score;
 
-    void Start()
+    void Awake()
     {
         timeText = gameObject.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         am = gameObject.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
