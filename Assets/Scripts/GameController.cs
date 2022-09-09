@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
     public GameBoard board;
     public PlayerController playerController;
     public PScoreAndWatch scoreAndWatch;
+    public UpdateAllObj updateAllObj;
 
     [Header("PlayerController")]
     [Tooltip("Time Btw Player Movement")]
@@ -45,12 +46,15 @@ public class GameController : MonoBehaviour
     void Awake()
     {
         _instance = this;
-        //gameState = GameState.Game;
     }
 
+    private void Start()
+    {
+        updateAllObj.StartCoroutine(updateAllObj.StartDisplayAll(3));
+    }
     public void StartGame()
     {
-        gameState = GameState.Game;
+        gameState = GameState.Game;   
     }
 
     // Update is called once per frame
