@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour
 
     public GameBoard board;
     public PlayerController playerController;
+    public PScoreAndWatch scoreAndWatch;
 
     [Header("PlayerController")]
     [Tooltip("Time Btw Player Movement")]
@@ -39,10 +40,16 @@ public class GameController : MonoBehaviour
     private int _babyMissCount = 0;
     private int _missedCarCol;
     private int _missedBabyCol;
+    private bool isCarMiss = false;
 
     void Awake()
     {
         _instance = this;
+        //gameState = GameState.Game;
+    }
+
+    public void StartGame()
+    {
         gameState = GameState.Game;
     }
 
@@ -71,9 +78,14 @@ public class GameController : MonoBehaviour
                 {
                     _pauseTimer = 0f;
                     gameState = GameState.Game;
-                    TCarController.i.carGrid.SetValueAt(_missedCarCol, 0, false);
-                    TCarController.i.strollerGrid.SetValueAt(_missedBabyCol, 0, false);
-                    
+                    if (isCarMiss)
+                    {
+                        TCarController.i.carGrid.SetValueAt(_missedCarCol, 0, false);
+                        isCarMiss = false;
+                    } else
+                    {
+                        TCarController.i.strollerGrid.SetValueAt(_missedBabyCol, 0, false);
+                    }
                 } else
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -87,6 +99,7 @@ public class GameController : MonoBehaviour
         _carMissCount++;
         gameState = GameState.MissPause;
         _missedCarCol = lane;
+        isCarMiss = true;
     }
 
     public void BabyMiss(int lane)
