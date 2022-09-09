@@ -43,6 +43,11 @@ public class GameController : MonoBehaviour
     void Awake()
     {
         _instance = this;
+        //gameState = GameState.Game;
+    }
+
+    public void StartGame()
+    {
         gameState = GameState.Game;
     }
 

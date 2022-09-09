@@ -82,6 +82,7 @@ public class PScoreAndWatch : MonoBehaviour
 
     public void GameStarted()
     {
+        GameController.instance.StartGame();
         // Affichage du score quand la partie commence
         if (gameStarted == false)
         {
