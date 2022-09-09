@@ -22,7 +22,6 @@ public class JGameController : MonoBehaviour
     [Tooltip("Time Btw Each update of the Game")]
     [SerializeField] float _timeBetweenUpdatingGame = 0.7f; 
     private float _timeBeforeUpdatingGame;
-    [SerializeField] float _percentToHaveBaby = 0.2f;
 
     [Header("PlayerController")]
     [Tooltip("Time Btw Player Movement")]

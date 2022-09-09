@@ -79,9 +79,6 @@ public class GameController : MonoBehaviour
                     TCarController.i.carGrid.SetValueAt(_missedCarCol, 0, false);
                     TCarController.i.strollerGrid.SetValueAt(_missedBabyCol, 0, false);
                     
-                } else
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }
             }
         }

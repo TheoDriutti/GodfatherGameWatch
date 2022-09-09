@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using TMPro;
 using System;
@@ -82,14 +83,18 @@ public class PScoreAndWatch : MonoBehaviour
 
     public void GameStarted()
     {
-        GameController.instance.StartGame();
+        
         // Affichage du score quand la partie commence
         if (gameStarted == false)
         {
+            GameController.instance.StartGame();
             gameStarted = true;
             tens.enabled = true;
             thousands.enabled = true;
         }
+        else if(gameStarted == true)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
     }
     public void AddScore()
     {
