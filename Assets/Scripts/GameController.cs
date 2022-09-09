@@ -92,7 +92,7 @@ public class GameController : MonoBehaviour
                     }
                 } else
                 {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }
             }
         }

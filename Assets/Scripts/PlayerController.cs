@@ -22,12 +22,10 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.RightArrow) && (_timeBeforePlayerAction < 0))
             {
                 MovePlayerRight();
-                RefillPlayerOil();
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow) && (_timeBeforePlayerAction < 0))
             {
                 MovePlayerLeft();
-                RefillPlayerOil();
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -38,24 +36,32 @@ public class PlayerController : MonoBehaviour
 
     public void MovePlayerRight()
     {
-        GameController.instance.board.SetValueAt(GameController.instance._playerColumn, GameController.instance.board.playerGrid.GetLength(1) - 1, GameController.instance.board.playerGrid, false);
+        if (GameController.instance.gameState == GameController.GameState.Game && (_timeBeforePlayerAction < 0))
+        {
+            GameController.instance.board.SetValueAt(GameController.instance._playerColumn, GameController.instance.board.playerGrid.GetLength(1) - 1, GameController.instance.board.playerGrid, false);
 
-        GameController.instance._playerColumn++;
-        if (GameController.instance._playerColumn > GameController.instance.board.playerGrid.GetLength(0)- 1) GameController.instance._playerColumn = GameController.instance.board.playerGrid.GetLength(0) - 1;
+            GameController.instance._playerColumn++;
+            if (GameController.instance._playerColumn > GameController.instance.board.playerGrid.GetLength(0)- 1) GameController.instance._playerColumn = GameController.instance.board.playerGrid.GetLength(0) - 1;
 
-        ResetPlayerValue();
-        ResetTime();
+            ResetPlayerValue();
+            ResetTime();
+            RefillPlayerOil();
+        }
     }
 
     public void MovePlayerLeft()
     {
-        GameController.instance.board.SetValueAt(GameController.instance._playerColumn, GameController.instance.board.playerGrid.GetLength(1) - 1, GameController.instance.board.playerGrid, false);
+        if (GameController.instance.gameState == GameController.GameState.Game && (_timeBeforePlayerAction < 0))
+        {
+            GameController.instance.board.SetValueAt(GameController.instance._playerColumn, GameController.instance.board.playerGrid.GetLength(1) - 1, GameController.instance.board.playerGrid, false);
 
-        GameController.instance._playerColumn--;
-        if (GameController.instance._playerColumn < 0) GameController.instance._playerColumn = 0;
+            GameController.instance._playerColumn--;
+            if (GameController.instance._playerColumn < 0) GameController.instance._playerColumn = 0;
 
-        ResetPlayerValue();
-        ResetTime();
+            ResetPlayerValue();
+            ResetTime();
+            RefillPlayerOil();
+        }
     }
 
     public void Fill()
@@ -63,10 +69,10 @@ public class PlayerController : MonoBehaviour
         int playerColumn = GameController.instance._playerColumn;
         if (NumberOfOil > 0 && playerColumn < 4)
         {
+            NumberOfOil--;
             if (TCarController.i.carGrid.GetValueAt(playerColumn, 0))
             {
                 GameController.instance.scoreAndWatch.AddScore();
-                NumberOfOil--;
                 FindObjectOfType<AudioManager>().Play("CarRefilled");
                 TCarController.i.carGrid.SetValueAt(playerColumn, 0, false);
                 TCarController.i._laneVehicleCounts[playerColumn]--;
