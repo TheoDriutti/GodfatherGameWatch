@@ -34,6 +34,7 @@ public class PBabyBurnedCondition : MonoBehaviour
     public void BabyBurned(int lane)
     {
         numbOfFail++;
+        FindObjectOfType<AudioManager>().Play("BabyBurned");
         GameController.instance.BabyMiss(lane);
         GameObject burnedBaby = strollerDisplay.carObjectGrid[lane, 0].gameObject;
         switch (numbOfFail)

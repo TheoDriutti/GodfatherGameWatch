@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
             if (TCarController.i.carGrid.GetValueAt(playerColumn, 0))
             {
                 NumberOfOil--;
+                FindObjectOfType<AudioManager>().Play("CarRefilled");
                 TCarController.i.carGrid.SetValueAt(playerColumn, 0, false);
                 TCarController.i._laneStates[playerColumn]--;
             } else
@@ -95,6 +96,7 @@ public class PlayerController : MonoBehaviour
         if (GameController.instance._playerColumn == GameController.instance.board.playerGrid.GetLength(0) - 1)
         {
             NumberOfOil = _maxOfOil;
+            FindObjectOfType<AudioManager>().Play("FuelReloaded");
         }
     }
 }
